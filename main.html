@@ -82,6 +82,537 @@ strcoor=strcoor.replaceAll("сек",'"');
 
 strcoor=strcoor.replaceAll("с.ш.","n");
 strcoor=strcoor.replaceAll("с. ш.","n");
+strcoor=strcoor.replaceAll("сш.","n");
+strcoor=strcoor.replaceAll("сш","n");
+strcoor=strcoor.replace("с./","n");
+strcoor=strcoor.replaceAll("широта","n");
+//strcoor=strcoor.replace("ш=","n");
+strcoor=strcoor.replaceAll("долгота","e");
+strcoor=strcoor.replaceAll("в.д.","e");
+strcoor=strcoor.replaceAll("в. д.","e");
+strcoor=strcoor.replaceAll("вд.","e");
+strcoor=strcoor.replaceAll("вд","e");
+strcoor=strcoor.replace("в.","e");
+strcoor = strcoor.replaceAll("зд","e");
+//strcoor=strcoor.replace("д=","e");
+
+strcoor=strcoor.replace("е","e");
+strcoor=strcoor.replaceAll("''",'"');
+strcoor=strcoor.replaceAll("wgs","");
+  alert(strcoor);
+if (strcoor.includes("°") & strcoor.includes("'") & strcoor.includes('"') & strcoor.includes(",")){
+  strcoor=strcoor.replaceAll(" ","");
+}
+
+if (strcoor.includes("?") & strcoor.includes("n") & strcoor.includes("e")){
+  strcoor=strcoor.replace("?","°");
+  strcoor=strcoor.replace("?","'");
+
+  strcoor=strcoor.replace("?","°");
+}
+
+if (strcoor.includes("n") & strcoor.includes("e") & strcoor.includes("-") & strcoor.includes("°")==false & strcoor.includes("'")==false & strcoor.includes('"')==false){
+  strcoor=strcoor.replace("-","°");
+  strcoor=strcoor.replace("-","'");
+  strcoor=strcoor.replace(" n",'"n');
+
+  strcoor=strcoor.replace("-","°");
+  strcoor=strcoor.replace("-","'");
+  strcoor=strcoor.replace(" e",'"e');
+}
+
+if (strcoor.includes("n") & strcoor.includes("e") & strcoor.includes("°") & strcoor.includes("'")==false & strcoor.includes('"')==false & strcoor.split(" ").length-1>2){
+  strcoor=strcoor.replace(" ","");
+  strcoor=strcoor.replace(" ","'");
+  strcoor=strcoor.replace(" ",'"');
+
+  strcoor=strcoor.replace(" ","");
+  strcoor=strcoor.replace(" ","");
+  strcoor=strcoor.replace(" ","'");
+  strcoor=strcoor.replace(" ",'"');
+}
+
+if (strcoor.includes("?") & strcoor.includes("??")==false & strcoor.includes("n") & strcoor.includes("e")){
+  strcoor=strcoor.replace("?","'");
+  strcoor=strcoor.replace("?",'"');
+
+  strcoor=strcoor.replace("?","'");
+  strcoor=strcoor.replace("?",'"');
+}
+
+if (strcoor.includes("?") & strcoor.includes("??") & strcoor.includes("n") & strcoor.includes("e")){
+  strcoor=strcoor.replace("?","°");
+  strcoor=strcoor.replace("?","'");
+  strcoor=strcoor.replace("??",'"');
+
+  strcoor=strcoor.replace("?","°");
+  strcoor=strcoor.replace("?","'");
+  strcoor=strcoor.replace("??",'"');
+}
+
+if (strcoor.includes("?") & strcoor.includes('"') & strcoor.includes("ш") & strcoor.includes("д") & strcoor.includes(",0")){
+  strcoor=strcoor.replaceAll(/[A-я.]/g,"");
+  strcoor=strcoor.replaceAll(" ","");
+  strcoor=strcoor.replace('"','"n');
+  strcoor+="e";
+  strcoor=strcoor.replaceAll(",0","");
+  strcoor=strcoor.replace("?,","°");
+  strcoor=strcoor.replace("?,","'");
+  strcoor=strcoor.replace("?,","°");
+  strcoor=strcoor.replace("?,","'");
+}
+
+if (strcoor.includes("/") & strcoor.includes("//") & strcoor.includes("n") & strcoor.includes("e")){
+  strcoor=strcoor.replaceAll(" ","");
+  strcoor=strcoor.replace("e","");
+  strcoor=strcoor.replace("/n,","//e");
+  strcoor="n"+strcoor;
+}
+
+if (strcoor.includes("o") || strcoor.includes("о") & !strcoor.includes("°") & strcoor.includes("'") & strcoor.includes('"')){
+  strcoor=strcoor.replaceAll("о","°");
+  strcoor=strcoor.replaceAll("o","°");
+}
+
+if (strcoor[0]=="n" || strcoor[0]=="e" & strcoor.includes("n") & strcoor.includes("e") & strcoor.includes("°") & strcoor.includes("'") & strcoor.includes('"')){
+  if (strcoor[0]=="n"){
+    strcoor=strcoor.replace('n','');
+    strcoor=strcoor.replace("e","n");
+    strcoor+="e";
+  }
+  else if (strcoor[0]=="e"){
+    strcoor=strcoor.replace('e','');
+    strcoor=strcoor.replace("n","e");
+    strcoor+="n";
+
+    let strremove = strcoor.split("e");
+    strcoor= strremove[1]+strremove[0]+"e";
+  }
+} 
+
+if (strcoor.includes("ш=") & strcoor.includes("д=") & !strcoor.includes("°") & !strcoor.includes("'") & !strcoor.includes('"')){
+  strcoor=strcoor.replace("n","");
+  strcoor=strcoor.replace(" ","°");
+  strcoor=strcoor.replace(" ","'");
+  strcoor=strcoor.replace(" ",'"');
+  strcoor=strcoor.replace('"','"n');
+  strcoor=strcoor.replace("ш=","");
+
+  strcoor=strcoor.replace("д=","");
+  strcoor=strcoor.replace(" ","°");
+  strcoor=strcoor.replace(" ","'");
+  strcoor+='"e';
+}
+
+  if (strcoor.includes("широта") & strcoor.includes("долгота") & strcoor.includes("°") & strcoor.includes("-")){
+    strcoor=strcoor.replace("широта ","");
+    strcoor=strcoor.replace(",","n,");
+      strcoor=strcoor.replace("долгота","");
+    strcoor+="e";
+    strcoor=strcoor.replaceAll(" ","");
+  }
+
+if (strcoor.includes("ш") & strcoor.includes("д") & strcoor[0]=="ш" & strcoor.includes(":")){
+  strcoor=strcoor.replace("ш:","");
+  strcoor=strcoor.replace("д:","n");
+  strcoor+="e";
+}
+
+if (strcoor.slice(0,3)=="сш." & strcoor.includes("вд.") & strcoor.includes("°") & strcoor.includes("'") & strcoor.includes('"')){
+  strcoor=strcoor.replace("сш.","");
+  strcoor=strcoor.replace('"','"n');
+  strcoor=strcoor.replace("вд.","");
+  strcoor+="e";
+}
+
+if (strcoor.includes("e") & strcoor.includes("n") & strcoor.includes("ш") & strcoor.includes("д") & strcoor.includes("'") & strcoor.includes('"')){
+  strcoor=strcoor.replaceAll(/[А-я]/g,"");
+  strcoor=strcoor.slice(3);
+  strcoor=strcoor.replace(" ","");
+}
+
+if (strcoor.split(" ").length-1>2 & strcoor.includes("°") & strcoor.includes("'") & strcoor.includes('"') &
+!strcoor.includes(",")){
+  strcoor=strcoor.replaceAll(" ","");
+  strcoor=strcoor.replaceAll('"n','"n ');
+  strcoor=strcoor.replaceAll(".0","");
+}
+
+if ((strcoor[2].includes("0") || strcoor[3].includes("0")) & !strcoor.includes("°") & strcoor.includes("'") & strcoor.includes('"')){
+  strcoor=strcoor.replaceAll(" ","");
+  strcoor = strcoor.replaceAll("'","/");
+  strcoor = strcoor.replaceAll('"e',"//");
+  strcoor = strcoor.replace('"n',"///e");
+  strcoor=strcoor.replaceAll("e,","e");
+  strcoor="n"+strcoor;
+}
+alert(strcoor);
+let mass=strcoor.split("");
+let massint=strcoor.replace(/[A-я]/g, '');
+let massnoznak=strcoor.replace(/[°'\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+let massnospace=strcoor.replace(" ","");
+let charcoor="";
+
+for (let i=0;i<strcoor.length;i++){
+  if (mass[0]=="e" || mass[0]=="n" || mass[0]=="w"){
+    if (mass[i].includes("e") || mass[i].includes("w")){
+     if (mass.includes("°")){
+      charcoor="";
+      let j=i+1;
+      while (mass[j]!="°"){
+        charcoor+=mass[j];
+        j++;
+      }
+      charcoor+=" 0 0";
+      dolgota=charcoor.split(" ");  
+     }
+     
+     if (mass.includes("/")){
+      charcoor="";
+      let j=i+1;
+      while (mass[j]!="/"){
+        charcoor+=mass[j];
+        if (parseInt(charcoor)>180)
+          charcoor=charcoor.slice(0,charcoor.length-1)+" ";
+        j++;
+      }
+      charcoor+=" ";
+      j++;
+      while (mass[j]!="/"){
+        charcoor+=mass[j];
+        j++;
+      }
+     dolgota=charcoor.split(" ");
+     }
+    }
+    
+    if (mass[i].includes("n")){
+     if (mass.includes("°")){
+      charcoor="";
+      let j=i+1;
+      while (mass[j]!="°"){
+        charcoor+=mass[j];
+        j++;
+      }
+      charcoor+=" 0 0";
+      shirota=charcoor.split(" ");
+     }
+
+     if (mass.includes("/")){
+      charcoor="";
+      let j=i+1;
+      while (mass[j]!="/"){
+        charcoor+=mass[j];
+        if (parseInt(charcoor)>180)
+          charcoor=charcoor.slice(0,charcoor.length-1)+" ";
+        j++;
+      }
+      charcoor+=" ";
+      j++;
+      while (mass[j]!="/"){
+        charcoor+=mass[j];
+        j++;
+      }
+     shirota=charcoor.split(" ");
+     }
+    }
+}
+else{
+if (strcoor.split(" ").length-1<=2){
+  if (mass[i].includes("e")){
+    if (mass.includes("°") & mass.includes("'") & mass.includes('"')){
+      let j=i;
+      let havegr=0;
+      let havemin=0;
+      let havesec=0;
+      while (mass[j]!="°"){ j--; }
+      j--;
+      while (mass[j]!=' ' & j>-1 & !isNaN(mass[j])){
+        havegr++;
+        j--;
+      }
+    charcoor=strcoor.slice(j+1,j+havegr+1);
+      j+=havegr+1;
+      while (mass[j]!="'"){
+        j++;
+        havemin++;
+      }
+      havemin--;
+      charcoor+=" "+strcoor.slice(j-havemin,j);
+      while (mass[j]!='"'){
+      j++;
+      havesec++;
+      }
+      havesec--;
+      charcoor+=" "+strcoor.slice(j-havesec,j);
+      dolgota=charcoor.split(" ");
+}
+else{
+    let j=i;
+    let havegr=0;
+    while (j>-1 & (mass[j]!=' ' || !isNaN(mass[j])==true)){
+      j--;
+      havegr++;
+    }
+
+charcoor=strcoor.slice(j+1,i)+' '+strcoor.slice(i+1,i+3)+' '+strcoor.slice(i+3,i+5);
+    dolgota=charcoor.split(" ");
+  }
+}
+}
+  if (mass[i].includes("n")){
+    if (mass.includes("°") & mass.includes("'") & mass.includes('"')){
+      let j=i;
+      let havegr=0;
+      let havemin=0;
+      let havesec=0;
+      while (mass[j]!="°"){ j--; }
+      j--;
+      while ((mass[j]!=' ' || !isNaN(mass[j])==true) & j>-1){
+        havegr++;
+        j--;
+      }
+    charcoor=strcoor.slice(j+1,j+havegr+1);
+      j+=havegr+1;
+      while (mass[j]!="'"){
+        j++;
+        havemin++;
+      }
+      havemin--;
+      charcoor+=" "+strcoor.slice(j-havemin,j);
+      while (mass[j]!='"'){
+      j++;
+      havesec++;
+      }
+      havesec--;
+      charcoor+=" "+strcoor.slice(j-havesec,j);
+      shirota=charcoor.split(" ");
+
+}
+else{
+    let j=i;
+    let havegr=0;
+    while (j>-1 & strcoor[j]!=" "){
+      j--;
+      havegr++;
+    }
+
+    charcoor=strcoor.slice(j+1,i)+' '+strcoor.slice(i+1,i+3)+' '+strcoor.slice(i+3,i+5);
+    shirota=charcoor.split(" ");
+  }
+}
+
+  if (mass[i].includes("n")){
+    if (strcoor.includes(",,") & mass.includes(",") & mass[2].includes(" ") || mass[3].includes(" ")){
+      charcoor="";
+      let j=0;
+      while (mass[j]!=","){
+        charcoor+=mass[j];
+        j++;
+      }
+      j++;
+      charcoor+=" ";
+      while (mass[j]!="n"){
+        charcoor+=mass[j];
+        j++;
+      }
+      charcoor=charcoor.slice(0,charcoor.length-2);
+      shirota=charcoor.split(" ");
+    }
+
+    if (mass.includes("°") & mass.includes("-")){
+      charcoor="";
+      let j=0;
+      while (mass[j]!="°"){
+        charcoor+=mass[j];
+        j++;
+      }
+      j++;
+      charcoor+=" ";
+      while (mass[j]!="-"){
+        charcoor+=mass[j];
+        j++;
+      }
+      j++;
+      charcoor+=" ";
+      while (mass[j]!="n"){
+        charcoor+=mass[j];
+        j++;
+      }
+      shirota=charcoor.split(" ");
+    }
+  }
+
+  if (mass[i].includes("e")){
+    if (strcoor.includes(",,") & mass.includes(",") & mass[2].includes(" ") || mass[3].includes(" ")){
+      charcoor="";
+      let j=mass.indexOf("n")+3;
+      while (mass[j]!=","){
+        charcoor+=mass[j];
+        j++;
+      }
+      j++;
+      charcoor+=" ";
+      while (mass[j]!="e"){
+        charcoor+=mass[j];
+        j++;
+      }
+      charcoor=charcoor.slice(0,charcoor.length-2);
+      dolgota=charcoor.split(" ");
+    }
+
+    if (mass.includes("°") & mass.includes("-")){
+      charcoor="";
+      let j=mass.indexOf("n")+2;
+      while (mass[j]!="°"){
+        charcoor+=mass[j];
+        j++;
+      }
+      j++;
+      charcoor+=" ";
+      while (mass[j]!="-"){
+        charcoor+=mass[j];
+        j++;
+      }
+      j++;
+      charcoor+=" ";
+      while (mass[j]!="e"){
+        charcoor+=mass[j];
+        j++;
+      }
+      dolgota=charcoor.split(" ");
+    }
+  }
+}
+}
+ alert(dolgota);
+
+//---- 2.0 end
+
+/*
+let mass = strcoor.replace(/['\/#!$%\^&\*;:{}=\-_`~()]/g, " ").split(" ");
+let charcoor="";
+alert(mass);
+
+for (let j=0;j<mass.length;j++){
+//alert(mass[j].replace(/[A-я.]/g,""));
+if (mass[j].includes("г") || mass[j].includes("м")){
+   charcoor=mass[j].replace("г", ' ').replace("м"," ").replace(/[A-я.]/g, '');
+   shirota=charcoor.split(" ");
+   
+   charcoor=mass[j+1].replace("г", ' ').replace("м"," ").replace(/[A-я.]/g, '');
+   dolgota=charcoor.split(" ");
+break;
+}
+
+  if (mass[j].includes('c') || mass[j].includes('с')){
+
+    let n=j-3;
+    while (n<j){
+      if (mass[n][2]=="0"){
+        charcoor=mass[n].slice(0,2)+" "+mass[n].slice(3)+" "+mass[n+1];
+        shirota=charcoor.split(" ");
+        break;
+      }
+        
+      if (mass[n]!="")
+     shirota.push(mass[n]);
+      n++;
+    }
+  }
+
+if (mass[j].includes('в')){
+    let n=j-3;
+    while (n<j){
+      if (mass[n][2]=="0"){
+        charcoor=mass[n].slice(0,2)+" "+mass[n].slice(3)+" "+mass[n+1];
+        dolgota=charcoor.split(" ");
+        break;
+      }
+
+      if (mass[n]!="")
+      dolgota.push(mass[n]);
+      n++;
+    }
+  }
+
+for (let i=0;i<mass[j].length;i++){
+  if (mass[j][i].includes('n')){
+    charcoor=mass[j].slice(0,i)+' '+mass[j].slice(i+1,i+3)+' '+mass[j].slice(i+3);
+    shirota=charcoor.split(" ");
+    break;
+}
+  if (mass[j][i].includes('e') || mass[j][i].includes('е')){
+    charcoor=mass[j].slice(0,i)+' '+mass[j].slice(i+1,i+3)+' '+mass[j].slice(i+3);
+    dolgota=charcoor.split(" ");
+    break;
+  }
+}
+}
+*/
+
+/*let newstrcoor=strcoor.replace(/[A-я]/g, '');
+strcoor=newstrcoor;*/
+resstrcoor.value=shirota+";"+dolgota;
+
+document.getElementById("shg").value = parseFloat(shirota[0].replace(",","."));
+document.getElementById("shm").value = parseFloat(shirota[1].replace(",","."));
+document.getElementById("shs").value = parseFloat(shirota[2].replace(",","."));
+
+document.getElementById("dg").value = parseFloat(dolgota[0].replace(",","."));
+document.getElementById("dm").value = parseFloat(dolgota[1].replace(",","."));
+document.getElementById("ds").value = parseFloat(dolgota[2].replace(",","."));
+
+showRes();
+}
+  </script>
+shirota.push(parseFloat(document.getElementById("shg").value));
+shirota.push(parseFloat(document.getElementById("shm").value));
+shirota.push(parseFloat(document.getElementById("shs").value));
+
+dolgota.push(parseFloat(document.getElementById("dg").value));
+dolgota.push(parseFloat(document.getElementById("dm").value));
+dolgota.push(parseFloat(document.getElementById("ds").value));
+
+let shpogr = parseFloat (document.getElementById("shpogr").value);
+let dpogr = parseFloat(document.getElementById("dpogr").value);
+var parResults = document.getElementById("resultGroup");
+
+let sumSh = (shirota[0]+shirota[1]/60+shirota[2]/3600+shpogr).toFixed(9);
+let sumD =(dolgota[0]+dolgota[1]/60+dolgota[2]/3600+dpogr).toFixed(9);
+
+var results = parResults.querySelector(".results");
+results.value=sumSh+" "+sumD;}
+
+function copyResults(){
+let parResults=document.getElementById("resultGroup");
+let results=parResults.querySelector(".results");
+results.select();
+document.execCommand("copy");
+}
+
+function clearParams(){
+const inputs = document.querySelectorAll('.inp');
+inputs.forEach(input => input.value = '');
+} 
+
+function calcStrCoor(){
+let shirota = new Array();
+let dolgota = new Array();
+let strcoor=document.getElementById("strcoor").value.toLowerCase();
+var resstrcoor = document.getElementById("resstrcoor");
+
+//---- 2.0 begin
+strcoor=strcoor.replaceAll("град.","°");
+strcoor=strcoor.replaceAll("град","°");
+strcoor=strcoor.replaceAll("гр.","°");
+strcoor=strcoor.replaceAll("мин.","'");
+strcoor=strcoor.replaceAll("мин","'");
+strcoor=strcoor.replaceAll("сек.",'"');
+strcoor=strcoor.replaceAll("сек",'"');
+
+strcoor=strcoor.replaceAll("с.ш.","n");
+strcoor=strcoor.replaceAll("с. ш.","n");
 strcoor=strcoor.replaceAll("сш","n");
 strcoor=strcoor.replace("с./","n");
 strcoor=strcoor.replaceAll("широта","n");
