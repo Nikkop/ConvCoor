@@ -1,0 +1,236 @@
+<h3 style="margin-top:10px">Широта</h3>
+  <input id="shg"  type="number" placeholder="Градусы" class="inp">
+  <input id="shm" type="number" placeholder="Минуты" class="inp">
+  <input id="shs"  type="number" placeholder="Секунды" class="inp">
+
+  <h3 style="margin-top:10px">Долгота</h3>
+  <input id="dg"  type="number" placeholder="Градусы" class="inp">
+  <input id="dm" type="number" placeholder="Минуты" class="inp">
+  <input id="ds" type="number" placeholder="Секунды" class="inp">
+<button id="clearparams" onClick="clearParams()" style="margin-top:10px">Очистить входные данные</button>
+<h4 style="margin-top:10px">Погрешность</h4>
+<p>Широта</p>
+<input id="shpogr" type="number" value="-0.0000005">
+<p>Долгота</p>
+<input id="dpogr" type="number" value="-0.0000005">
+<br>
+<button onClick="showRes()" style="margin-top:10px">Рассчитать</button>
+<div id="resultGroup" style="margin-top:30px">
+<h3 style="margin-top:10px;margin-bottom:10px">Результаты</h3>
+<p>Широта, долгота<input type="text" class="results" style="width:80%" readonly></p>
+<button id="copyres" onClick="copyResults()">Скопировать</button>
+<br>
+</div>
+<h4 style="margin-top:10px">Строка с координатами</h4>
+<textarea id="strcoor" class="inp" style="height:80px; width:80%; max-width:80%; max-height:120px; min-width:60%; min-height:60px" maxlength="150"></textarea>
+<br>
+<button id="calcstrcoor" onClick="calcStrCoor()" style="margin-top:10px;margin-bottom:20px">Рассчитать</button>
+<br>
+<input id="resstrcoor" type="text">
+<div id="contacts" style="margin-top: 30px">
+  <p>--Контакты--</p>
+  <p>Telegram: @VyacheslavSab</p>
+  <p>Git: <a href="https://github.com/Nikkop/ConvCoor">https://github.com/Nikkop/ConvCoor</a></p>
+</div>
+  <script>
+function showRes(){
+let shirota=new Array();
+let dolgota=new Array();
+
+shirota.push(parseFloat(document.getElementById("shg").value));
+shirota.push(parseFloat(document.getElementById("shm").value));
+shirota.push(parseFloat(document.getElementById("shs").value));
+
+dolgota.push(parseFloat(document.getElementById("dg").value));
+dolgota.push(parseFloat(document.getElementById("dm").value));
+dolgota.push(parseFloat(document.getElementById("ds").value));
+
+let shpogr = parseFloat (document.getElementById("shpogr").value);
+let dpogr = parseFloat(document.getElementById("dpogr").value);
+var parResults = document.getElementById("resultGroup");
+
+let sumSh = (shirota[0]+shirota[1]/60+shirota[2]/3600+shpogr).toFixed(9);
+let sumD =(dolgota[0]+dolgota[1]/60+dolgota[2]/3600+dpogr).toFixed(9);
+
+var results = parResults.querySelector(".results");
+results.value=sumSh+" "+sumD;}
+
+function copyResults(){
+let parResults=document.getElementById("resultGroup");
+let results=parResults.querySelector(".results");
+results.select();
+document.execCommand("copy");
+}
+
+function clearParams(){
+const inputs = document.querySelectorAll('.inp');
+inputs.forEach(input => input.value = '');
+} 
+
+function calcStrCoor(){
+let shirota = new Array();
+let dolgota = new Array();
+let strcoor=document.getElementById("strcoor").value.toLowerCase();
+var resstrcoor = document.getElementById("resstrcoor");
+let charcoor="";
+
+//---- 2.0 begin
+let beginstrcoor=strcoor;
+strcoor=strcoor.replaceAll("град.","°");
+strcoor=strcoor.replaceAll("град","°");
+strcoor=strcoor.replaceAll("гр.","°");
+strcoor=strcoor.replaceAll("*","°");
+strcoor=strcoor.replaceAll("мин.","'");
+strcoor=strcoor.replaceAll("мин","'");
+strcoor=strcoor.replaceAll("c","с");
+strcoor=strcoor.replaceAll("сек.",'"');
+strcoor=strcoor.replaceAll("сек",'"');
+
+strcoor=strcoor.replaceAll("сев. широты","n");
+strcoor=strcoor.replaceAll("с.ш.","n");
+strcoor=strcoor.replaceAll("с. ш.","n");
+strcoor=strcoor.replaceAll("сш.","n");
+strcoor=strcoor.replaceAll("сш","n");
+strcoor=strcoor.replace("с./","n ");
+strcoor=strcoor.replaceAll("широта","n");
+strcoor=strcoor.replace("n,","n");
+strcoor=strcoor.replace("ш:","n");
+strcoor=strcoor.replace("ш=","n");
+strcoor=strcoor.replaceAll("долгота","e");
+strcoor=strcoor.replaceAll("вост. долготы","e");
+strcoor=strcoor.replaceAll("в.д.","e");
+strcoor=strcoor.replaceAll("в. д.","e");
+strcoor=strcoor.replaceAll("вд.","e");
+strcoor=strcoor.replaceAll("вд","e");
+strcoor=strcoor.replace("в.","e");
+strcoor = strcoor.replaceAll("зд","e");
+strcoor=strcoor.replace("e,","e");
+strcoor=strcoor.replace("д:","e");
+strcoor=strcoor.replace("д=","e");
+
+strcoor=strcoor.replace("е","e");
+strcoor=strcoor.replaceAll("''",'"');
+strcoor=strcoor.replaceAll("wgs","");
+strcoor=strcoor.replaceAll('м','"');
+strcoor=strcoor.replace("/w","e");
+
+strcoor=strcoor.replace("с","n");
+strcoor=strcoor.replace("в","e");
+strcoor=strcoor.replaceAll("o","°");
+strcoor=strcoor.replaceAll("о","°");
+  alert(strcoor);
+  
+  let npos=strcoor.indexOf("n");
+  let epos=strcoor.indexOf("e");
+  if (npos==-1 & epos==-1)
+    npos=-2;
+  
+  strcoor=strcoor.replace(/[^0-9.,]/g, ' ');
+  strcoor=strcoor.replaceAll(" , "," ");
+  strcoor=strcoor.replaceAll(" . "," ");
+  strcoor=strcoor.replaceAll(",",".");
+  let masscoor=strcoor.split(" ");
+  alert(masscoor);
+  for (let i=0;i<masscoor.length;i++){
+    if (masscoor[i]!="" & masscoor[i]!="." & masscoor[i]!=" "){
+
+      if (masscoor[i]>180 & !isNaN(masscoor[i])==true)   
+      if (masscoor[i].slice(0,3)>180)
+        masscoor[i]=masscoor[i].slice(0,2)+masscoor[i].slice(2).replace("0"," ");
+      else
+        masscoor[i]=masscoor[i].slice(0,3)+masscoor[i].slice(3).replace("0"," ");
+
+      if (masscoor[i].split(".").length-1>1)
+        masscoor[i]=masscoor[i].replace("."," ");
+      if (charcoor!="")
+        charcoor+=" ";
+
+      charcoor+=masscoor[i];
+      //alert(masscoor[i]);
+      while (charcoor[charcoor.length-1]==".")
+        charcoor=charcoor.slice(0,charcoor.length-1);
+    }
+  }
+
+  masscoor=charcoor.split(" ");
+  let mcpart=masscoor.length/2;
+
+if (mcpart==2){
+ if (masscoor[1].length<5 & masscoor[3].length<5){
+  charcoor=masscoor[0]+" "+masscoor[1].slice(0,2)+" "+masscoor[1].slice(2);
+  if (npos<epos)
+    shirota=charcoor.split(" ");
+  else
+    dolgota=charcoor.split(" ");
+  charcoor=masscoor[2]+" "+masscoor[3].slice(0,2)+" "+masscoor[3].slice(2);
+  if (npos<epos)
+    dolgota=charcoor.split(" ");
+  else
+    shirota=charcoor.split(" ");
+  if (shirota[2]=="")
+    shirota[2]="0";
+  if (dolgota[2]=="")
+    dolgota[2]="0";
+ }else if (masscoor[1].length>5 & masscoor[3].length>5){
+  charcoor=masscoor[0]+"."+masscoor[1]+" 0 0";
+  if (npos<epos)
+    shirota=charcoor.split(" ");
+  else
+    dolgota=charcoor.split(" ");
+  charcoor=masscoor[2]+"."+masscoor[3]+" 0 0";
+  if (npos<epos)
+    dolgota=charcoor.split(" ");
+  else
+    shirota=charcoor.split(" ");
+ }
+}
+
+if (mcpart==3){
+  charcoor=masscoor.slice(0,mcpart);
+  if (npos<epos)
+    shirota=charcoor;
+  else
+    dolgota=charcoor;
+
+  charcoor=masscoor.slice(mcpart);
+  if (npos<epos)
+    dolgota=charcoor;
+  else
+    shirota=charcoor;
+}
+if (mcpart==1){
+  charcoor=masscoor.slice(0,mcpart);
+  charcoor+=" 0 0";
+  if (npos<epos)
+    shirota=charcoor.split(" ");
+  else
+    dolgota=charcoor.split(" ");
+
+  charcoor=masscoor.slice(mcpart);
+  charcoor+=" 0 0";
+  if (npos<epos)
+    dolgota=charcoor.split(" ");
+  else
+    shirota=charcoor.split(" ");
+}
+
+alert(masscoor);
+alert(mcpart);
+let mass=strcoor.split("");
+let massint=strcoor.replace(/[A-я]/g, '');
+let massnoznak=strcoor.replace(/[°'\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+let massnospace=strcoor.replace(" ","");
+
+resstrcoor.value=shirota+";"+dolgota;
+
+document.getElementById("shg").value = parseFloat(shirota[0].replace(",","."));
+document.getElementById("shm").value = parseFloat(shirota[1].replace(",","."));
+document.getElementById("shs").value = parseFloat(shirota[2].replace(",","."));
+
+document.getElementById("dg").value = parseFloat(dolgota[0].replace(",","."));
+document.getElementById("dm").value = parseFloat(dolgota[1].replace(",","."));
+document.getElementById("ds").value = parseFloat(dolgota[2].replace(",","."));
+
+showRes();
+}
+  </script>
